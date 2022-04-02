@@ -46,7 +46,7 @@ successAudio.volume = 0.4;
 yeahAudio.volume = 0.3
 clapAudio.volume = 0.4
 buzzAudio.volume = 0.5
-backAudio.volume = 0.3
+backAudio.volume = 0.2
 isGameStarted = true;
 
 bubbleAudio.loop = true
