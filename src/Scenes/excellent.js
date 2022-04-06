@@ -58,7 +58,6 @@ export default function Scene18({ nextFunc, _geo }) {
     ];
 
     useEffect(() => {
-        console.log(audioList)
         
         audioList.bodyAudio1.src = returnAudioPath('107')
 

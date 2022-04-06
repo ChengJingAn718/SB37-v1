@@ -115,6 +115,8 @@ export default function Scene({ _geo, nextFunc, _baseGeo, gameNumber }) {
         }, 2000);
 
 
+        baseObject.current.style.pointerEvents = 'none'
+        
         audioList.bodyAudio1.src = returnAudioPath('12')
         setRepeatAudio(audioList.repeatAudio)
 
@@ -127,6 +129,9 @@ export default function Scene({ _geo, nextFunc, _baseGeo, gameNumber }) {
 
             timerList[1] = setTimeout(() => {
                 audioList.repeatAudio.play();
+                timerList[2] = setTimeout(() => {
+                    baseObject.current.style.pointerEvents = ''
+                }, audioList.repeatAudio.duration * 1000);
                 startRepeatAudio();
             }, audioList.bodyAudio1.duration * 1000);
 
