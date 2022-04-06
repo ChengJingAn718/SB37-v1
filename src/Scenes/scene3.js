@@ -114,7 +114,6 @@ export default function Scene({ _geo, nextFunc, _baseGeo, gameNumber }) {
             isRendered = true;
         }, 2000);
 
-        baseObject.current.style.pointerEvents = 'none'
 
         audioList.bodyAudio1.src = returnAudioPath('12')
         setRepeatAudio(audioList.repeatAudio)
@@ -124,9 +123,11 @@ export default function Scene({ _geo, nextFunc, _baseGeo, gameNumber }) {
 
         timerList[0] = setTimeout(() => {
             audioList.bodyAudio1.play().catch(error => { });
-            startRepeatAudio();
+
+
             timerList[1] = setTimeout(() => {
-                baseObject.current.style.pointerEvents = ''
+                audioList.repeatAudio.play();
+                startRepeatAudio();
             }, audioList.bodyAudio1.duration * 1000);
 
         }, 1500);
@@ -357,10 +358,10 @@ export default function Scene({ _geo, nextFunc, _baseGeo, gameNumber }) {
             audioList.bodyAudio1.play().catch(error => { });
 
 
-            startRepeatAudio();
 
             timerList[1] = setTimeout(() => {
-                baseObject.current.style.pointerEvents = ''
+                audioList.repeatAudio.play();
+                startRepeatAudio();
             }, audioList.bodyAudio1.duration * 1000);
         }, 1500);
 
@@ -419,6 +420,11 @@ export default function Scene({ _geo, nextFunc, _baseGeo, gameNumber }) {
     }
 
     function dragEndFunc() {
+
+        timerList.map(timer => clearTimeout(timer))
+        audioList.repeatAudio.pause();
+        audioList.repeatAudio.currentTime = 0;
+        stopRepeatAudio();
 
         if (Math.abs(x - startPosInfo.x) > 50 || Math.abs(y - startPosInfo.y) > 50) {
             let currentAnswer = 0;
@@ -684,19 +690,19 @@ export default function Scene({ _geo, nextFunc, _baseGeo, gameNumber }) {
                         <div
                             ref={dragCharacterBaseRef}
                             style={{
-                                position: "fixed", width: _baseGeo.width * 0.08 + "px",
-                                height: _baseGeo.height * 0.08 + "px"
-                                , left: _baseGeo.left + _baseGeo.width * 0.46 + "px",
-                                top: _baseGeo.top + _baseGeo.height * 0.42 + "px",
+                                position: "fixed", width: _baseGeo.width * 0.16 + "px",
+                                height: _baseGeo.width * 0.16 + "px"
+                                , left: _baseGeo.left + _baseGeo.width * 0.42 + "px",
+                                top: _baseGeo.top + _baseGeo.height * 0.335 + "px",
+                                borderRadius: '50%',
+                                // background:'black',
                                 cursor: 'grab',
-                                transform: 'scale(' + (currentCharacter != null && currentCharacter.includes('Cheetah') ? 0.9 : 1) + '1'
-
                             }}>
                             {currentCharacter != null &&
                                 <BaseImage
                                     ref={dragCharacterRef}
-                                    scale={1.9}
-                                    posInfo={{ l: -0.45, t: -1 }}
+                                    scale={0.95}
+                                    posInfo={{ l: 0.0, t: 0.00 }}
                                     url={"SB_37_Character-Interactive/" + currentCharacter.slice(0, currentCharacter.length - 1) + "1.svg"}
                                 />
                             }
